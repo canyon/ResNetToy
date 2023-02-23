@@ -43,11 +43,11 @@ def read_dataset(batch_size=16,valid_size=0.2,num_workers=0):
 
 
     # Convert data to torch.FloatTensor, and normalize
-    dataset_base_path = 'C:/Users/79981/Desktop/CAS771/code/ResNet18_Cifar10_95.46/dataset/10/'
-    npy_path_train='C:/Users/79981/Desktop/CAS771/code/ResNet18_Cifar10_95.46/dataset/10/train'
-    txt_path_train='C:/Users/79981/Desktop/CAS771/code/ResNet18_Cifar10_95.46/dataset/10/train_label.txt'
-    npy_path_test='C:/Users/79981/Desktop/CAS771/code/ResNet18_Cifar10_95.46/dataset/10/test'
-    txt_path_test='C:/Users/79981/Desktop/CAS771/code/ResNet18_Cifar10_95.46/dataset/10/test_label.txt'
+    dataset_base_path = 'C:/Users/79981/Desktop/CAS771/code/ResNetToy/dataset/10/'
+    npy_path_train='C:/Users/79981/Desktop/CAS771/code/ResNetToy/dataset/10/train'
+    txt_path_train='C:/Users/79981/Desktop/CAS771/code/ResNetToy/dataset/10/train_label.txt'
+    npy_path_test='C:/Users/79981/Desktop/CAS771/code/ResNetToy/dataset/10/test'
+    txt_path_test='C:/Users/79981/Desktop/CAS771/code/ResNetToy/dataset/10/test_label.txt'
     train_data = CIFAR(npy_path=npy_path_train, txt_path=txt_path_train, transform=transform_train)
     valid_data = CIFAR(npy_path=npy_path_train, txt_path=txt_path_train, transform=transform_test)
     test_data = CIFAR(npy_path=npy_path_test, txt_path=txt_path_test, transform=transform_test)

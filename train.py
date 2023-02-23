@@ -5,13 +5,14 @@ import torch.nn as nn
 import torch.optim as optim
 from utils.readData import read_dataset
 from utils.ResNet import ResNet18
+from utils.arguments import get_args
 
 torch.backends.cudnn.enabled = True
 torch.backends.cudnn.benchmark = True
 
 # Import TensorBoard library and set up a SummaryWriter
 from torch.utils.tensorboard import SummaryWriter
-writer = SummaryWriter(log_dir='log_dir/run1')
+writer = SummaryWriter(log_dir='log_dir/run3')
 
 # set device
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -34,12 +35,13 @@ model = model.to(device)
 criterion = nn.CrossEntropyLoss().to(device)
 
 # start training
-n_epochs = 10
+n_epochs = 5
 valid_loss_min = np.Inf # track change in validation loss
 accuracy = []
 lr = 0.1
 counter = 0
-for epoch in tqdm(range(1, n_epochs+1)):
+tqdm_list = tqdm(range(1, n_epochs+1))
+for epoch in tqdm_list:
 
     # keep track of training and validation loss
     train_loss = 0.0
@@ -106,8 +108,8 @@ for epoch in tqdm(range(1, n_epochs+1)):
     valid_loss = valid_loss/len(valid_loader.sampler)
         
     # Show loss functions for training and validation sets
-    epoch.set_description('Epoch: [{}/{}]'.format(epoch, n_epochs))
-    epoch.set_postfix('Accuracy: {:.6f} \tTraining Loss: {:.6f} \tValidation Loss: {:.6f}'.format(100*tmp_acc, train_loss, valid_loss))
+    tqdm_list.set_description('Epoch: [{}/{}]'.format(epoch, n_epochs))
+    tqdm_list.set_postfix({'Accuracy': '{:.6f}'.format(100*tmp_acc), 'Training Loss': '{:.6f}'.format(train_loss), 'Validation Loss': '{:.6f}'.format(valid_loss)})
     
     # If the validation set loss function decreases, save the model
     if valid_loss <= valid_loss_min:
@@ -123,3 +125,10 @@ for epoch in tqdm(range(1, n_epochs+1)):
     writer.add_scalar('Accuracy', 100*tmp_acc, epoch)
     writer.add_scalar('Learning Rate', optimizer.param_groups[0]["lr"], epoch)
 writer.close()
+
+
+# if __name__ == '__main__':
+#   args = get_args()
+#   print('Called with args:')
+#   print(args)
+
