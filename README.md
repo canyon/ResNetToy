@@ -2,7 +2,7 @@
 This is a modified variant of ResNet trained on encrypted CIFAR10/100 dataset using pytorch. Trying to apply different tricks on modified ResNet to get better performance with encrypted dataset.
 
 ## Results
-![results](readme_pics/results.png)
+![results](readme_pics/all.png)
 
 ## Get Started
 ### Environment
