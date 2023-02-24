@@ -1,7 +1,7 @@
 dataset/
-log_dir/
+runs/
 checkpoint/
-log/
+logs/
 
 
 # Byte-compiled / optimized / DLL files
