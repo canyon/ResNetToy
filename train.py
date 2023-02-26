@@ -11,7 +11,7 @@ from utils.arguments import get_args
 
 # Import TensorBoard library and set up a SummaryWriter
 from torch.utils.tensorboard import SummaryWriter
-writer = SummaryWriter(log_dir='runs/run1')
+writer = SummaryWriter(log_dir='runs/run8-resnet18_class=10_step=300_batch=32_kernel=3_dataAug=yes')
 
 # Add seed for reproducible result
 # Added starts from run5
@@ -35,11 +35,11 @@ torch.cuda.set_per_process_memory_fraction(0.5, 0)
 torch.cuda.empty_cache()
 
 # read dataset
-batch_size = 128
+batch_size = 32
 train_loader,valid_loader,test_loader = read_dataset(batch_size=batch_size)
 # Load the model (use preprocessed model, modify last layer, fix previous weights)
 n_class = 10
-model = ResNet34()
+model = ResNet18()
 """
 The 7x7 downsampling convolution and pooling operations of the ResNet18 network tend to lose part of the information.
 So in the experiment we removed the 7x7 downsampling layer and the maximum pooling layer and replaced it with a 3x3 downsampling convolution.
@@ -55,8 +55,8 @@ model = model.to(device)
 criterion = nn.CrossEntropyLoss().to(device)
 
 # start training
-# ResNet34 takes 50 epochs/h on 3060
-n_epochs = 50*4
+# 50 epochs/h on 3060
+n_epochs = 50*6
 valid_loss_min = np.Inf # track change in validation loss
 accuracy = []
 lr = 0.1
