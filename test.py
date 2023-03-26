@@ -6,15 +6,15 @@ from utils.ResNet import ResNet18, ResNet34, ResNet50, ResNet101
 # set device
 device = 'cuda'
 n_class = 10
-batch_size = 128
+batch_size = 16
 train_loader,valid_loader,test_loader = read_dataset(batch_size=batch_size)
 # Get the pre-trained model
-model = ResNet18()
+model = ResNet34()
 model.conv1 = nn.Conv2d(in_channels=3, out_channels=64, kernel_size=3, stride=1, padding=1, bias=False)
 # Modify the last fully connected layer
 model.fc = torch.nn.Linear(512, n_class)
 # load weight
-model.load_state_dict(torch.load('checkpoint/run1/resnet18_class=10_step=400_batch=128_kernel=3_dataAug=yes.pt'))
+model.load_state_dict(torch.load('checkpoint/run7/resnet34_class=10_step=300_batch=32_kernel=3_dataAug=yes.pt'))
 model = model.to(device)
 
 total_sample = 0

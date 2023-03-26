@@ -14,10 +14,10 @@ def draw_all_features(savenames):
     for savename in savenames:
         fig_all.add_subplot(2, 3, idx)
         plt.axis('off')
-        plt.imshow(Image.open('utils/vis_pics/feature_map_{}.jpg'.format(savename)))
+        plt.imshow(Image.open('utils/vis_pics/1/feature_map_{}.jpg'.format(savename)))
         idx += 1
     plt.tight_layout()
-    fig_all.savefig('utils/vis_pics/feature_map.jpg', dpi=300)
+    fig_all.savefig('utils/vis_pics/1/feature_map.jpg', dpi=300)
 
 def draw_features(x,savename):
     x = x.detach().cpu().numpy()
@@ -34,7 +34,7 @@ def draw_features(x,savename):
         img = (img - pmin) / (pmax - pmin + 0.000001)
         plt.imshow(img, cmap='gray')
     plt.suptitle('Feature Map of {}'.format(savename), fontsize=25)
-    fig.savefig('utils/vis_pics/feature_map_{}.jpg'.format(savename), dpi=300)
+    fig.savefig('utils/vis_pics/1/feature_map_{}.jpg'.format(savename), dpi=300)
 
 def draw_after_layer_img(tensor, name):
     tensor = tensor.squeeze(0)
@@ -45,7 +45,7 @@ def draw_after_layer_img(tensor, name):
     plt.imshow(gray_scale)
     plt.axis("off")
     plt.title('Output Image of {}'.format(name), fontsize=12)
-    fig.savefig('utils/vis_pics/output_{}.jpg'.format(name), dpi=300)
+    fig.savefig('utils/vis_pics/1/output_{}.jpg'.format(name), dpi=300)
 
 def save_img(tensor, name):
     tensor = tensor.permute((1, 0, 2, 3))
@@ -55,7 +55,8 @@ def save_img(tensor, name):
     
 def vis_feature_map(img, transforms, model):
     model.eval()
-    img = transforms(Image.fromarray(np.uint8(np.load(img))))
+    # img = transforms(Image.fromarray(np.uint8(np.load(img))))
+    img = transforms(Image.open(img))
     img = img.unsqueeze(0)
 
     f1 = model.conv1(img)
@@ -102,7 +103,7 @@ if __name__ == '__main__':
     n_class = 10
     # batch_size = 128
     # train_loader,valid_loader,test_loader = read_dataset(batch_size=batch_size)
-    img_path = 'C:/Users/79981/Desktop/CAS771/code/ResNetToy/dataset/10/test/0.npy'
+    img_path = r'C:\Users\79981\Desktop\CAS771\code\ResNetToy\dog4.png'
     transform_train = transforms.Compose([
         # Fill with 0 around first, then randomly crop the image into 32*32
         transforms.RandomCrop(32, padding=4), 
@@ -111,7 +112,7 @@ if __name__ == '__main__':
         transforms.ToTensor(),
         # The mean and variance used in the normalization of each layer of R, G, and B
         transforms.Normalize(mean=[0.485, 0.456, 0.406],std=[0.229, 0.224, 0.225]), 
-        Cutout(n_holes=1, length=16),
+        Cutout(n_holes=1, length=8),
     ])
 
     # Get the pre-trained model

@@ -33,7 +33,7 @@ def read_dataset(batch_size=16,valid_size=0.2,num_workers=0):
         transforms.ToTensor(),
         # The mean and variance used in the normalization of each layer of R, G, and B
         transforms.Normalize(mean=[0.485, 0.456, 0.406],std=[0.229, 0.224, 0.225]), 
-        Cutout(n_holes=1, length=16),
+        Cutout(n_holes=1, length=8),
     ])
 
     transform_test = transforms.Compose([
@@ -41,13 +41,16 @@ def read_dataset(batch_size=16,valid_size=0.2,num_workers=0):
         transforms.Normalize(mean=[0.485, 0.456, 0.406],std=[0.229, 0.224, 0.225]),
     ])
 
-
+    
+    ##########################################== Edit Below ==#######################################
     # Convert data to torch.FloatTensor, and normalize
     dataset_base_path = 'C:/Users/79981/Desktop/CAS771/code/ResNetToy/dataset/10/'
-    npy_path_train='C:/Users/79981/Desktop/CAS771/code/ResNetToy/dataset/10/train'
-    txt_path_train='C:/Users/79981/Desktop/CAS771/code/ResNetToy/dataset/10/train_label.txt'
-    npy_path_test='C:/Users/79981/Desktop/CAS771/code/ResNetToy/dataset/10/test'
-    txt_path_test='C:/Users/79981/Desktop/CAS771/code/ResNetToy/dataset/10/test_label.txt'
+    #################################################################################################
+
+    npy_path_train=os.path.join(dataset_base_path, 'train')
+    txt_path_train=os.path.join(dataset_base_path, 'train_label.txt')
+    npy_path_test=os.path.join(dataset_base_path, 'test')
+    txt_path_test=os.path.join(dataset_base_path, 'test_label.txt')
     train_data = CIFAR(npy_path=npy_path_train, txt_path=txt_path_train, transform=transform_train)
     valid_data = CIFAR(npy_path=npy_path_train, txt_path=txt_path_train, transform=transform_test)
     test_data = CIFAR(npy_path=npy_path_test, txt_path=txt_path_test, transform=transform_test)
